@@ -1,0 +1,22 @@
+{
+    "sourceFile": "services/api_service.dart",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 1,
+            "patches": [
+                {
+                    "date": 1761326278352,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1761327064178,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,8 +1,8 @@\n import 'dart:convert';\n import 'package:http/http.dart' as http;\n-import 'country_model.dart';\n-import 'user_model.dart';\n+import '../models/country_model.dart';\n+import '../models/user_model.dart';\n \n class ApiService {\n   Future<List<User>> fetchUsers() async {\n     final response = await http.get(Uri.parse('https://reqres.in/api/users'));\n"
+                }
+            ],
+            "date": 1761326278352,
+            "name": "Commit-0",
+            "content": "import 'dart:convert';\nimport 'package:http/http.dart' as http;\nimport '../models/country_model.dart';\nimport '../models/user_model.dart';\n\nclass ApiService {\n  Future<List<User>> fetchUsers() async {\n    final response = await http.get(Uri.parse('https://reqres.in/api/users'));\n\n    if (response.statusCode == 200) {\n      final Map<String, dynamic> data = json.decode(response.body);\n      final List<dynamic> userList = data['data'];\n      return userList.map((json) => User.fromJson(json)).toList();\n    } else {\n      throw Exception('Failed to load users');\n    }\n  }\n\n  Future<List<Country>> fetchCountries() async {\n    // Pedimos solo los campos que necesitamos para optimizar la respuesta.\n    final response = await http.get(\n        Uri.parse('https://restcountries.com/v3.1/all?fields=name,capital'));\n\n    if (response.statusCode == 200) {\n      // La respuesta es una lista de JSON, no un objeto.\n      // Usamos utf8.decode para manejar caracteres especiales como tildes.\n      final List<dynamic> countryList =\n          json.decode(utf8.decode(response.bodyBytes));\n      return countryList\n          .map((json) => Country.fromJson(json))\n          .toList()\n          // Ordenamos los países alfabéticamente por nombre.\n          ..sort((a, b) => a.name.compareTo(b.name));\n    } else {\n      throw Exception('Failed to load countries');\n    }\n  }\n}"
+        }
+    ]
+}

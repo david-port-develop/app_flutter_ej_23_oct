@@ -1,0 +1,26 @@
+{
+    "sourceFile": "lib/services/api_service.dart",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 2,
+            "patches": [
+                {
+                    "date": 1761327314506,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1761380360518,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,19 +3,31 @@\n import '../models/country_model.dart';\n import '../models/user_model.dart';\n \n class ApiService {\n+  static const String _baseUrl = \"https://reqres.in/api\";\n+  static const Map<String, String> _headers = {\n+    'x-api-key': 'reqres-free-v1',\n+  };\n+\n   Future<List<User>> fetchUsers() async {\n-    final response = await http.get(Uri.parse('https://reqres.in/api/users'));\n+    try {\n+      final response = await http.get(\n+        Uri.parse('$_baseUrl/users'),\n+        headers: _headers,\n+      );\n \n-    if (response.statusCode == 200) {\n-      final Map<String, dynamic> data = json.decode(response.body);\n-      final List<dynamic> userList = data['data'];\n-      return userList.map((json) => User.fromJson(json)).toList();\n-    } else {\n-      throw Exception('Failed to load users');\n+      if (response.statusCode == 200) {\n+        final Map<String, dynamic> data = json.decode(response.body);\n+        final List<dynamic> userList = data['data'];\n+        return userList.map((json) => User.fromJson(json)).toList();\n+      } else {\n+        throw Exception('Failed to load users');\n+      }\n+    } catch (e) {\n+      throw Exception('Error: $e'); \n     }\n-  }\n+  } \n \n   Future<List<Country>> fetchCountries() async {\n     // Pedimos solo los campos que necesitamos para optimizar la respuesta.\n     final response = await http.get(\n"
+                },
+                {
+                    "date": 1761380375278,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -4,11 +4,9 @@\n import '../models/user_model.dart';\n \n class ApiService {\n   static const String _baseUrl = \"https://reqres.in/api\";\n-  static const Map<String, String> _headers = {\n-    'x-api-key': 'reqres-free-v1',\n-  };\n+  static const Map<String, String> _headers = {'x-api-key': 'reqres-free-v1'};\n \n   Future<List<User>> fetchUsers() async {\n     try {\n       final response = await http.get(\n@@ -23,11 +21,11 @@\n       } else {\n         throw Exception('Failed to load users');\n       }\n     } catch (e) {\n-      throw Exception('Error: $e'); \n+      throw Exception('Error: $e');\n     }\n-  } \n+  }\n \n   Future<List<Country>> fetchCountries() async {\n     // Pedimos solo los campos que necesitamos para optimizar la respuesta.\n     final response = await http.get(\n"
+                }
+            ],
+            "date": 1761327314506,
+            "name": "Commit-0",
+            "content": "import 'dart:convert';\nimport 'package:http/http.dart' as http;\nimport '../models/country_model.dart';\nimport '../models/user_model.dart';\n\nclass ApiService {\n  Future<List<User>> fetchUsers() async {\n    final response = await http.get(Uri.parse('https://reqres.in/api/users'));\n\n    if (response.statusCode == 200) {\n      final Map<String, dynamic> data = json.decode(response.body);\n      final List<dynamic> userList = data['data'];\n      return userList.map((json) => User.fromJson(json)).toList();\n    } else {\n      throw Exception('Failed to load users');\n    }\n  }\n\n  Future<List<Country>> fetchCountries() async {\n    // Pedimos solo los campos que necesitamos para optimizar la respuesta.\n    final response = await http.get(\n      Uri.parse('https://restcountries.com/v3.1/all?fields=name,capital'),\n    );\n\n    if (response.statusCode == 200) {\n      // La respuesta es una lista de JSON, no un objeto.\n      // Usamos utf8.decode para manejar caracteres especiales como tildes.\n      final List<dynamic> countryList = json.decode(\n        utf8.decode(response.bodyBytes),\n      );\n      return countryList.map((json) => Country.fromJson(json)).toList()\n        // Ordenamos los países alfabéticamente por nombre.\n        ..sort((a, b) => a.name.compareTo(b.name));\n    } else {\n      throw Exception('Failed to load countries');\n    }\n  }\n}\n"
+        }
+    ]
+}

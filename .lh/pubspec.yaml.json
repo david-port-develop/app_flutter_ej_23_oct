@@ -1,0 +1,18 @@
+{
+    "sourceFile": "pubspec.yaml",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1761326164244,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1761326164244,
+            "name": "Commit-0",
+            "content": "name: app_flutter_ej_23_oct\ndescription: \"A new Flutter project.\"\npublish_to: 'none'\nversion: 0.1.0\n\nenvironment:\n  sdk: ^3.9.2\n\ndependencies:\n  http: ^1.2.1\n  flutter:\n    sdk: flutter\n\ndev_dependencies:\n  flutter_test:\n    sdk: flutter\n  flutter_lints: ^4.0.0\n\nflutter:\n  uses-material-design: true\n"
+        }
+    ]
+}

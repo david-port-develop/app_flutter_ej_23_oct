@@ -1,0 +1,18 @@
+{
+    "sourceFile": "models/user_model.dart",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1761326229078,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1761326229078,
+            "name": "Commit-0",
+            "content": "class User {\n  final int id;\n  final String email;\n  final String firstName;\n  final String lastName;\n\n  User({\n    required this.id,\n    required this.email,\n    required this.firstName,\n    required this.lastName,\n  });\n\n  factory User.fromJson(Map<String, dynamic> json) {\n    return User(\n      id: json['id'],\n      email: json['email'],\n      firstName: json['first_name'],\n      lastName: json['last_name'],\n    );\n  }\n}\n"
+        }
+    ]
+}
